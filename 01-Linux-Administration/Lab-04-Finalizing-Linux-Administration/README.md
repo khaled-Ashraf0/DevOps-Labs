@@ -34,6 +34,7 @@ sudo chmod 770 /srv/analytics_data
 # Verify directory ownership and permissions
 ls -ld /srv/analytics_data
 ```
+<img width="958" height="172" alt="Screenshot 2026-11-28 010938" src="https://github.com/user-attachments/assets/a60c5d2c-ecc6-4be5-a9df-11e3c0aea1af" />
 
 ---
 
@@ -81,6 +82,7 @@ sudo firewall-cmd --reload
 # Verify active rules
 sudo firewall-cmd --list-all
 ```
+<img width="566" height="312" alt="Screenshot 2026-11-28 011441" src="https://github.com/user-attachments/assets/7182dd2f-2367-4a8c-96e5-26dc7d426205" />
 
 ---
 
@@ -122,6 +124,7 @@ sudo chmod +x /usr/local/bin/disk_checker.sh
 sudo /usr/local/bin/disk_checker.sh
 cat /var/log/disk_health.log
 ```
+<img width="731" height="210" alt="Screenshot 2026-11-28 012204" src="https://github.com/user-attachments/assets/24bb8c7e-b798-4879-ad39-30b8fa54f93c" />
 
 ---
 
@@ -153,13 +156,14 @@ echo "tar -czf /tmp/logs_backup.tar.gz /var/log" | sudo at now + 15 minutes
 # Verify scheduled job queue
 sudo atq
 ```
+<img width="1012" height="155" alt="Screenshot 2026-11-28 012611" src="https://github.com/user-attachments/assets/4be8b64e-119f-4a28-838d-9d3bf39e8ed7" />
 
 ---
 
 ## Part 5: Permission Validation & Verification Checklist
 
 Verification matrix validating access control boundaries across `data-analyst`, `audit-lead`, and unprivileged users[cite: 22]:
-
+```bash
 | Test Case | User Context | Command Executed | Expected Behavior | Actual Behavior |
 | :--- | :--- | :--- | :--- | :--- |
 | **Test Case 1** | `data-analyst` | `touch /srv/analytics_data/report.csv` | **Success:** `data-analyst` belongs to owning group `analytics` with `rwx` (`770`) permissions[cite: 21, 22]. | File `/srv/analytics_data/report.csv` created without errors[cite: 22]. |
@@ -167,3 +171,6 @@ Verification matrix validating access control boundaries across `data-analyst`, 
 | **Test Case 3** | `audit-lead` | `ssh -p 2223 audit-lead@localhost` | **Success:** SSH daemon listens on port `2223` and firewall permits `2223/tcp`[cite: 21, 22]. | Authenticated and opened an interactive shell session on port `2223`[cite: 22]. |
 | **Test Case 4** | `audit-lead` | `sudo /usr/local/bin/disk_checker.sh` | **Denied (unless in sudoers):** Standard user not in `sudo` group cannot run root commands[cite: 21, 22]. | `audit-lead is not in the sudoers file. This incident will be reported.`[cite: 22] |
 | **Test Case 5** | Unprivileged User (`other`) | `cat /srv/analytics_data/report.csv` | **Denied:** Directory permissions (`770`) block all access for `others`[cite: 21, 22]. | `cat: /srv/analytics_data/report.csv: Permission denied`[cite: 22]. |
+```
+<img width="1532" height="270" alt="Screenshot 2026-11-28 013145" src="https://github.com/user-attachments/assets/ea2c4a2b-da24-4ca3-850b-94bece2f2244" />
+
