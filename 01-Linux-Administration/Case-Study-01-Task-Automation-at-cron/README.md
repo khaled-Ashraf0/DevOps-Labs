@@ -73,6 +73,7 @@ crontab -l
 # Confirm timestamps are appended every minute
 cat /tmp/cron-test.txt
 ```
+![Cron Execution Output](./cron-execution-output.png)
 
 ---
 
@@ -85,3 +86,4 @@ crontab -r
 # Confirm no active cron jobs remain for the user
 crontab -l
 ```
+![Active Crontab Entries](./crontab-list.png)
