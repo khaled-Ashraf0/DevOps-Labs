@@ -1,4 +1,4 @@
-# DevOps Engineering Labs & Case Studies
+# DevOps Labs & Case Studies
 
 Hands-on practical labs, automation scripts, and infrastructure case studies completed during my DevOps Engineering training track *(actively updated as new modules are completed)*.
 
